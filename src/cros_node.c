@@ -2039,13 +2039,13 @@ void cRosNodeDoEventsLoop ( CrosNode *n )
 
       if( xmlrpc_client_fd >= 0 )
       {
-        FD_SET( xmlrpc_client_fd, fdset);
-        FD_SET( xmlrpc_client_fd, &err_fds);
+        MY_FD_SET( xmlrpc_client_fd, fdset);
+        MY_FD_SET( xmlrpc_client_fd, &err_fds);
       }
     }
   }
 
-  //printf("FD_SET COUNT. R: %d W: %d\n", r_count, w_count);
+  //printf("MY_FD_SET COUNT. R: %d W: %d\n", r_count, w_count);
 
   /* Add to the select() the active XMLRPC servers */
   int next_xmlrpc_server_i = -1;
@@ -2062,8 +2062,8 @@ void cRosNodeDoEventsLoop ( CrosNode *n )
     {
       if( server_fd >= 0 )
       {
-        FD_SET( server_fd, &r_fds);
-        FD_SET( server_fd, &err_fds);
+        MY_FD_SET( server_fd, &r_fds);
+        MY_FD_SET( server_fd, &err_fds);
       }
       if( server_fd > nfds ) nfds = server_fd;
     }
@@ -2071,8 +2071,8 @@ void cRosNodeDoEventsLoop ( CrosNode *n )
     {
       if( server_fd >= 0 )
       {
-        FD_SET( server_fd, &w_fds);
-        FD_SET( server_fd, &err_fds);
+        MY_FD_SET( server_fd, &w_fds);
+        MY_FD_SET( server_fd, &err_fds);
       }
       if( server_fd > nfds ) nfds = server_fd;
     }
@@ -2083,8 +2083,8 @@ void cRosNodeDoEventsLoop ( CrosNode *n )
   {
     if( xmlrpc_listner_fd >= 0 )
     {
-      FD_SET( xmlrpc_listner_fd, &r_fds);
-      FD_SET( xmlrpc_listner_fd, &err_fds);
+      MY_FD_SET( xmlrpc_listner_fd, &r_fds);
+      MY_FD_SET( xmlrpc_listner_fd, &err_fds);
     }
     if( xmlrpc_listner_fd > nfds ) nfds = xmlrpc_listner_fd;
   }
@@ -2111,8 +2111,8 @@ void cRosNodeDoEventsLoop ( CrosNode *n )
     {
       if( tcpros_client_fd >= 0 )
       {
-        FD_SET( tcpros_client_fd, &w_fds);
-        FD_SET( tcpros_client_fd, &err_fds);
+        MY_FD_SET( tcpros_client_fd, &w_fds);
+        MY_FD_SET( tcpros_client_fd, &err_fds);
       }
       if( tcpros_client_fd > nfds ) nfds = tcpros_client_fd;
     }
@@ -2123,8 +2123,8 @@ void cRosNodeDoEventsLoop ( CrosNode *n )
     {
       if( tcpros_client_fd >= 0 )
       {
-        FD_SET( tcpros_client_fd, &r_fds);
-        FD_SET( tcpros_client_fd, &err_fds);
+        MY_FD_SET( tcpros_client_fd, &r_fds);
+        MY_FD_SET( tcpros_client_fd, &err_fds);
       }
       if( tcpros_client_fd > nfds ) nfds = tcpros_client_fd;
     }
@@ -2145,8 +2145,8 @@ void cRosNodeDoEventsLoop ( CrosNode *n )
     {
       if( server_fd >= 0 )
       {
-        FD_SET( server_fd, &r_fds);
-        FD_SET( server_fd, &err_fds);
+        MY_FD_SET( server_fd, &r_fds);
+        MY_FD_SET( server_fd, &err_fds);
       }
       if( server_fd > nfds ) nfds = server_fd;
     }
@@ -2155,15 +2155,15 @@ void cRosNodeDoEventsLoop ( CrosNode *n )
     {
       if( server_fd >= 0 )
       {
-        FD_SET( server_fd, &w_fds);
-        FD_SET( server_fd, &err_fds);
+        MY_FD_SET( server_fd, &w_fds);
+        MY_FD_SET( server_fd, &err_fds);
       }
       if( server_fd > nfds ) nfds = server_fd;
     }
     else if( n->tcpros_server_proc[i].state == TCPROS_PROCESS_STATE_WAIT_FOR_WRITING )
     {
       if( server_fd >= 0 )
-        FD_SET( server_fd, &err_fds);
+        MY_FD_SET( server_fd, &err_fds);
       if( server_fd > nfds ) nfds = server_fd;
     }
   }
@@ -2173,8 +2173,8 @@ void cRosNodeDoEventsLoop ( CrosNode *n )
   {
     if( tcpros_listner_fd >= 0 )
     {
-      FD_SET( tcpros_listner_fd, &r_fds);
-      FD_SET( tcpros_listner_fd, &err_fds);
+      MY_FD_SET( tcpros_listner_fd, &r_fds);
+      MY_FD_SET( tcpros_listner_fd, &err_fds);
     }
     if( tcpros_listner_fd > nfds ) nfds = tcpros_listner_fd;
   }
@@ -2230,8 +2230,8 @@ void cRosNodeDoEventsLoop ( CrosNode *n )
     {
       if ( server_fd >= 0 )
       {
-        FD_SET( server_fd, &r_fds);
-        FD_SET( server_fd, &err_fds);
+        MY_FD_SET( server_fd, &r_fds);
+        MY_FD_SET( server_fd, &err_fds);
       }
       if( server_fd > nfds ) nfds = server_fd;
     }
@@ -2240,15 +2240,15 @@ void cRosNodeDoEventsLoop ( CrosNode *n )
     {
       if ( server_fd >= 0 )
       {
-        FD_SET( server_fd, &w_fds);
-        FD_SET( server_fd, &err_fds);
+        MY_FD_SET( server_fd, &w_fds);
+        MY_FD_SET( server_fd, &err_fds);
       }
       if( server_fd > nfds ) nfds = server_fd;
     }
     else if( n->rpcros_server_proc[i].state == TCPROS_PROCESS_STATE_WAIT_FOR_WRITING )
     {
       if ( server_fd >= 0 )
-        FD_SET( server_fd, &err_fds);
+        MY_FD_SET( server_fd, &err_fds);
       if( server_fd > nfds ) nfds = server_fd;
     }
   }
@@ -2258,8 +2258,8 @@ void cRosNodeDoEventsLoop ( CrosNode *n )
   {
     if ( rpcros_listner_fd >= 0 )
     {
-      FD_SET( rpcros_listner_fd, &r_fds);
-      FD_SET( rpcros_listner_fd, &err_fds);
+      MY_FD_SET( rpcros_listner_fd, &r_fds);
+      MY_FD_SET( rpcros_listner_fd, &err_fds);
     }
     if( rpcros_listner_fd > nfds ) nfds = rpcros_listner_fd;
   }
