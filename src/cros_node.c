@@ -2023,11 +2023,13 @@ void cRosNodeDoEventsLoop ( CrosNode *n )
     fd_set *fdset = NULL;
     if( n->xmlrpc_client_proc[i].state == XMLRPC_PROCESS_STATE_WRITING )
     {
+      printf("fdset = &w_fds;\n");
       fdset = &w_fds;
       if( xmlrpc_client_fd > nfds ) nfds = xmlrpc_client_fd;
     }
     else if( n->xmlrpc_client_proc[i].state == XMLRPC_PROCESS_STATE_READING )
     {
+      printf("fdset = &r_fds;\n");
       fdset = &r_fds;
       if( xmlrpc_client_fd > nfds ) nfds = xmlrpc_client_fd;
     }
@@ -2352,6 +2354,7 @@ void cRosNodeDoEventsLoop ( CrosNode *n )
     for(i = 0; i < CN_MAX_XMLRPC_CLIENT_CONNECTIONS; i++ )
     {
       int xmlrpc_client_fd = tcpIpSocketGetFD( &(n->xmlrpc_client_proc[i].socket) );
+      printf("i: %d fd: %d\n", i, xmlrpc_client_fd);
 
       if( FD_ISSET(xmlrpc_client_fd, &err_fds) )
       {
@@ -2363,6 +2366,8 @@ void cRosNodeDoEventsLoop ( CrosNode *n )
       else if( ( n->xmlrpc_client_proc[i].state == XMLRPC_PROCESS_STATE_WRITING && FD_ISSET(xmlrpc_client_fd, &w_fds) ) ||
           ( n->xmlrpc_client_proc[i].state == XMLRPC_PROCESS_STATE_READING && FD_ISSET(xmlrpc_client_fd, &r_fds) ) )
       {
+        printf("cond1: %d\n", ( n->xmlrpc_client_proc[i].state == XMLRPC_PROCESS_STATE_WRITING && FD_ISSET(xmlrpc_client_fd, &w_fds) ));
+        printf("cond2: %d\n", ( n->xmlrpc_client_proc[i].state == XMLRPC_PROCESS_STATE_READING && FD_ISSET(xmlrpc_client_fd, &r_fds) ));
         doWithXmlrpcClientSocket( n, i );
       }
     }
