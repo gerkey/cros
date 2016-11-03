@@ -128,7 +128,7 @@ static void binaryToXml ( void *val, DynString *message )
 
 int paramFromXml (DynString *message, XmlrpcParam *param,  ParamContainerType container)
 {
-  PRINT_VDEBUG ( "paramFromXml(), is_array : %s \n", is_array?"TRUE":"FALSE" );
+  //PRINT_VDEBUG ( "paramFromXml(), is_array : %s \n", is_array?"TRUE":"FALSE" );
 
   int rc;
   const char *c = dynStringGetCurrentData ( message );
