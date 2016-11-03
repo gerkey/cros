@@ -1,3 +1,5 @@
+#define MY_FD_SET(a, b) printf("FD_SET(%d, %p, %s)", a, b, #b);FD_SET(a,b);
+
 #include <stdio.h>
 #ifndef __APPLE__
   #include <malloc.h>
@@ -2268,6 +2270,7 @@ void cRosNodeDoEventsLoop ( CrosNode *n )
 
   struct timeval tv = cRosClockGetTimeVal( timeout );
 
+  printf("nfds: %d\n", nfds);
   int n_set = select(nfds + 1, &r_fds, &w_fds, &err_fds, &tv);
 
   if (n_set == -1)
